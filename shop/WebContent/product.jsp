@@ -111,7 +111,7 @@
 
 			<div id="footer" align= "center">
 				<pg:index>
-					<pg:page><%=page%></pg:page>
+					<pg:page><%=thisPage%></pg:page>
 				</pg:index>
 			</div>
 		</div>

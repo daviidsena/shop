@@ -24,7 +24,7 @@
 				for (Category c : list) {
 					
 			%>
-			<li><a href="index.jsp?ma_the_loai=<%=c.getMa_the_loai()%>"> <i class="fa fa-home"><img
+			<li><a href="IndexServlet?ma_the_loai=<%=c.getMa_the_loai()%>"> <i class="fa fa-home"><img
 						src="images/<%=c.getMa_the_loai() %>.png"></i>
 					<strong><%=c.getTen_the_loai()%></strong> <small><%=c.getMo_ta()%></small>
 			</a></li>
