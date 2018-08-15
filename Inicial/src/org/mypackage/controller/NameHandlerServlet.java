@@ -6,7 +6,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import org.mypackage.dao.NameHandlerDao;
+import org.mypackage.dao.exception.DaoException;
+import org.mypackage.dao.impl.NameHandlerDaoImpl;
 import org.mypackage.hello.NameHandler;
 
 /**
@@ -30,11 +34,20 @@ public class NameHandlerServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String name = (String) request.getParameter("name");
 		String cpf = (String) request.getParameter("cpf");
-		NameHandler nameHandlerBean = new NameHandler();
-		nameHandlerBean.setName(name);
-		nameHandlerBean.setCpf(cpf);
-		request.setAttribute("name", name);
-		request.setAttribute("cpf", cpf);
+		NameHandler nameBean = new NameHandler();
+		nameBean.setName(name);
+		nameBean.setCpf(cpf);
+		HttpSession session = request.getSession();
+		session.setAttribute("nameBean", nameBean);
+
+		NameHandlerDao nameHandlerDao = new NameHandlerDaoImpl();
+		try {
+			NameHandler bean = nameHandlerDao.create(nameBean);
+		} catch (DaoException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 		response.sendRedirect("response.jsp");
 	}
 
