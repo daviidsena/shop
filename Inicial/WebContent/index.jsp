@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <html>
 <head>
@@ -56,7 +56,7 @@
 			<img src="images/banner.jpg" width="800px" height="100px" />
 		</div>
 		<div id="corpo">
-			<div id="">
+			<div>
 				<form name="Insert" action="UsuarioServlet">
 					<input type="hidden" name="operacao" value="insert">
 					<p>
@@ -68,26 +68,29 @@
 					<input type="submit" value="OK" />
 				</form>
 			</div>
-			<div id="">
-				<c:choose>
-					<c:when test="{not empty usuarios}">
-						<table style="width: 100%">
-							<tr>
-								<th>Nome</th>
-								<th>CPF</th>
+			<div>
+				<table style="width: 100%">
+					<tr align="center">
+						<th>Nome</th>
+						<th>CPF</th>
+					</tr>
+					<c:choose>
+						<c:when test="${empty listaUsuarios}">
+							<tr align="center">
+								<td>Não há usuários</td>
+								<td></td>
 							</tr>
-							<c:forEach var="usuario" items="${usuarios}">
-								<tr>
+						</c:when>
+						<c:when test="${not empty listaUsuarios}">
+							<c:forEach var="usuario" items="${listaUsuarios}">
+								<tr align="center">
 									<td>${usuario.nome}</td>
 									<td>${usuario.cpf}</td>
 								</tr>
 							</c:forEach>
-						</table>
-					</c:when>
-					<c:when test="{empty usuarios}">
-						<span>Não há usuários</span>
-					</c:when>
-				</c:choose>
+						</c:when>
+					</c:choose>
+				</table>
 			</div>
 		</div>
 		<div id="rodape"><jsp:include page="rodape.jsp"></jsp:include></div>

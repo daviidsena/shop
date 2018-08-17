@@ -2,6 +2,7 @@ package org.itstep.javaee.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.swing.event.ListSelectionEvent;
 
 import org.itstep.javaee.dao.UsuarioDao;
 import org.itstep.javaee.dao.exception.DaoException;
@@ -48,11 +50,12 @@ public class UsuarioServlet extends HttpServlet {
 				usuarioDao.create(usuario);
 			}
 			usuarios = usuarioDao.findByAll();
+			System.out.println(Arrays.toString(usuarios.toArray()));
 		} catch (DaoException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		request.setAttribute("usuarios", usuarios);
+		request.setAttribute("listaUsuarios", usuarios);
 		RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
 		rd.forward(request, response);
 	}
