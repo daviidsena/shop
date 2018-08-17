@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -35,25 +36,25 @@ public class UsuarioServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String nome = (String) request.getParameter("nome");
-		String cpf = (String) request.getParameter("cpf");
-		Usuario usuario = new Usuario();
-		usuario.setNome(nome);
-		usuario.setCpf(cpf);
-		HttpSession session = request.getSession();
-		session.setAttribute("usuario", usuario);
-
 		UsuarioDao usuarioDao = new UsuarioDaoImpl();
 		List<Usuario> usuarios = new ArrayList<Usuario>();
 		try {
-			Usuario bean = usuarioDao.create(usuario);
+			Usuario usuario = new Usuario();
+			if (request.getParameter("nome") != null) {
+				String nome = (String) request.getParameter("nome");
+				String cpf = (String) request.getParameter("cpf");
+				usuario.setNome(nome);
+				usuario.setCpf(cpf);
+				usuarioDao.create(usuario);
+			}
 			usuarios = usuarioDao.findByAll();
 		} catch (DaoException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		request.setAttribute("usuarios", usuarios);
-		response.sendRedirect("index.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
+		rd.forward(request, response);
 	}
 
 	/**

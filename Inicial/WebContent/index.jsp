@@ -56,7 +56,7 @@
 			<img src="images/banner.jpg" width="800px" height="100px" />
 		</div>
 		<div id="corpo">
-			<div>
+			<div id="">
 				<form name="Insert" action="UsuarioServlet">
 					<input type="hidden" name="operacao" value="insert">
 					<p>
@@ -68,22 +68,26 @@
 					<input type="submit" value="OK" />
 				</form>
 			</div>
-			<div>
-				<ul>
-					<li><span>Nome</span></li>
-					<li><span>Cpf</span></li>
-					<c:choose>
-						<c:when test="{not empty usuarios}">
+			<div id="">
+				<c:choose>
+					<c:when test="{not empty usuarios}">
+						<table style="width: 100%">
+							<tr>
+								<th>Nome</th>
+								<th>CPF</th>
+							</tr>
 							<c:forEach var="usuario" items="${usuarios}">
-								<li>${usuario.nome}</li>
-								<li>${usuario.cpf}</li>
+								<tr>
+									<td>${usuario.nome}</td>
+									<td>${usuario.cpf}</td>
+								</tr>
 							</c:forEach>
-						</c:when>
-						<c:when test="{empty usuarios}">
-							<span>Não há usuários</span>
-						</c:when>
-					</c:choose>
-				</ul>
+						</table>
+					</c:when>
+					<c:when test="{empty usuarios}">
+						<span>Não há usuários</span>
+					</c:when>
+				</c:choose>
 			</div>
 		</div>
 		<div id="rodape"><jsp:include page="rodape.jsp"></jsp:include></div>
