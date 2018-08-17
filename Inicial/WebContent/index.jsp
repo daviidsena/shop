@@ -34,7 +34,7 @@
 
 #corpo {
 	width: 800px;
-	min-height: 430px;
+	min-height: 230px;
 	border: 1px solid #CDCDCD;
 	float: left;
 	margin-bottom: 5px;
@@ -56,15 +56,35 @@
 			<img src="images/banner.jpg" width="800px" height="100px" />
 		</div>
 		<div id="corpo">
-			<form name="Autenticacao" action="NameHandlerServlet">
-				<p>
-					<label>Usuário:</label> <input type="text" name="name" />
-				</p>
-				<p>
-					<label>CPF:</label> <input type="text" name="cpf" />
-				</p>
-				<input type="submit" value="OK" />
-			</form>
+			<div>
+				<form name="Insert" action="UsuarioServlet">
+					<input type="hidden" name="operacao" value="insert">
+					<p>
+						<label>Usuário:</label> <input type="text" name="nome" />
+					</p>
+					<p>
+						<label>CPF:</label> <input type="text" name="cpf" />
+					</p>
+					<input type="submit" value="OK" />
+				</form>
+			</div>
+			<div>
+				<ul>
+					<li><span>Nome</span></li>
+					<li><span>Cpf</span></li>
+					<c:choose>
+						<c:when test="{not empty usuarios}">
+							<c:forEach var="usuario" items="${usuarios}">
+								<li>${usuario.nome}</li>
+								<li>${usuario.cpf}</li>
+							</c:forEach>
+						</c:when>
+						<c:when test="{empty usuarios}">
+							<span>Não há usuários</span>
+						</c:when>
+					</c:choose>
+				</ul>
+			</div>
 		</div>
 		<div id="rodape"><jsp:include page="rodape.jsp"></jsp:include></div>
 	</div>

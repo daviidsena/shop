@@ -1,6 +1,9 @@
-package org.mypackage.controller;
+package org.itstep.javaee.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -8,22 +11,22 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.mypackage.dao.NameHandlerDao;
-import org.mypackage.dao.exception.DaoException;
-import org.mypackage.dao.impl.NameHandlerDaoImpl;
-import org.mypackage.hello.NameHandler;
+import org.itstep.javaee.dao.UsuarioDao;
+import org.itstep.javaee.dao.exception.DaoException;
+import org.itstep.javaee.dao.impl.UsuarioDaoImpl;
+import org.itstep.javaee.model.Usuario;
 
 /**
- * Servlet implementation class NameHandlerServlet
+ * Servlet implementation class UsuarioServlet
  */
-@WebServlet("/NameHandlerServlet")
-public class NameHandlerServlet extends HttpServlet {
+@WebServlet("/UsuarioServlet")
+public class UsuarioServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public NameHandlerServlet() {
+    public UsuarioServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,23 +35,25 @@ public class NameHandlerServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String name = (String) request.getParameter("name");
+		String nome = (String) request.getParameter("nome");
 		String cpf = (String) request.getParameter("cpf");
-		NameHandler nameBean = new NameHandler();
-		nameBean.setName(name);
-		nameBean.setCpf(cpf);
+		Usuario usuario = new Usuario();
+		usuario.setNome(nome);
+		usuario.setCpf(cpf);
 		HttpSession session = request.getSession();
-		session.setAttribute("nameBean", nameBean);
+		session.setAttribute("usuario", usuario);
 
-		NameHandlerDao nameHandlerDao = new NameHandlerDaoImpl();
+		UsuarioDao usuarioDao = new UsuarioDaoImpl();
+		List<Usuario> usuarios = new ArrayList<Usuario>();
 		try {
-			NameHandler bean = nameHandlerDao.create(nameBean);
+			Usuario bean = usuarioDao.create(usuario);
+			usuarios = usuarioDao.findByAll();
 		} catch (DaoException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-		response.sendRedirect("response.jsp");
+		request.setAttribute("usuarios", usuarios);
+		response.sendRedirect("index.jsp");
 	}
 
 	/**

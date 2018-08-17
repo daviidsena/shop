@@ -1,4 +1,4 @@
-package org.mypackage.dao;
+package org.itstep.javaee.dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

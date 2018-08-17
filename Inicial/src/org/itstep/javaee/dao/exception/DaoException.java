@@ -1,4 +1,4 @@
-package org.mypackage.dao.exception;
+package org.itstep.javaee.dao.exception;
 
 public class DaoException extends Exception {
 

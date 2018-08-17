@@ -8,7 +8,7 @@
 </head>
 <body>
 	<jsp:useBean id="nameBean" scope="session"
-		class="org.mypackage.hello.NameHandler" />
+		class="org.itstep.javaee.model.Usuario" />
 	<h1>
 		Hello,
 		<jsp:getProperty name="nameBean" property="name" />, seu CPF é
