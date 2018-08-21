@@ -41,6 +41,22 @@
 	clear: both;
 }
 
+#cadastro {
+	min-height: 300px;
+	clear: both;
+	border: 1px solid #CDCDCD;
+	background-color: #CFF8FF;
+	margin-bottom: 5px;
+}
+
+#lista {
+	min-height: 100px;
+	clear: both;
+	border: 1px solid #CDCDCD;
+	background-color: #C8F8FF;
+	margin-bottom: 5px;
+}
+
 #rodape {
 	height: 50px;
 	clear: both;
@@ -58,35 +74,45 @@
 		<div id="corpo">
 			<div>
 				<form name="Insert" action="UsuarioServlet">
-					<input type="hidden" name="operacao" value="insert">
-					<p>
-						<label>Usuário:</label> <input type="text" name="nome" />
-					</p>
-					<p>
-						<label>CPF:</label> <input type="text" name="cpf" />
-					</p>
-					<input type="submit" value="OK" />
+					<input type="hidden" name="operacao" value="insert" />
+					<table style="width: 100%">
+						<tr align="center">
+							<th>Nome</th>
+							<th>CPF</th>
+							<th>Inclusão</th>
+						</tr>
+						<tr align="center">
+							<td><input type="text" name="nome" /></td>
+							<td><input type="text" name="cpf" /></td>
+							<td><input type="submit" value="Incluir" /></td>
+						</tr>
+					</table>
 				</form>
 			</div>
-			<div>
+			<div id="lista">
 				<table style="width: 100%">
 					<tr align="center">
 						<th>Nome</th>
 						<th>CPF</th>
+						<th>Atualizar</th>
+						<th>Excluir</th>
 					</tr>
 					<c:choose>
 						<c:when test="${empty listaUsuarios}">
 							<tr align="center">
 								<td>Não há usuários</td>
-								<td></td>
 							</tr>
 						</c:when>
 						<c:when test="${not empty listaUsuarios}">
 							<c:forEach var="usuario" items="${listaUsuarios}">
-								<tr align="center">
-									<td>${usuario.nome}</td>
-									<td>${usuario.cpf}</td>
-								</tr>
+								<form method="post" action="UsuarioServlet">
+									<tr align="center">
+										<td>${usuario.nome}</td>
+										<td>${usuario.cpf}</td>
+										<td><input type="submit" value="Alterar" /></td>
+										<td><input type="submit" value="Excluir" /></td>
+									</tr>
+								</form>
 							</c:forEach>
 						</c:when>
 					</c:choose>
