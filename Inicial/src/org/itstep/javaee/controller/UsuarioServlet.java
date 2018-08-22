@@ -41,13 +41,20 @@ public class UsuarioServlet extends HttpServlet {
 		UsuarioDao usuarioDao = new UsuarioDaoImpl();
 		List<Usuario> usuarios = new ArrayList<Usuario>();
 		try {
-			Usuario usuario = new Usuario();
-			if (request.getParameter("nome") != null) {
-				String nome = (String) request.getParameter("nome");
-				String cpf = (String) request.getParameter("cpf");
-				usuario.setNome(nome);
-				usuario.setCpf(cpf);
-				usuarioDao.create(usuario);
+			if (request.getParameter("operacao") != null) {
+				Usuario usuario = new Usuario();
+				String operacao = request.getParameter("operacao");
+				if (operacao.equals("insert")) {
+					String nome = (String) request.getParameter("nome");
+					String cpf = (String) request.getParameter("cpf");
+					usuario.setNome(nome);
+					usuario.setCpf(cpf);
+					usuarioDao.create(usuario);
+				} else if (operacao.equals("delete")) {
+					String cpf = (String) request.getParameter("cpf");
+					usuario.setCpf(cpf);
+					usuarioDao.delete(usuario);
+				}
 			}
 			usuarios = usuarioDao.findByAll();
 			System.out.println(Arrays.toString(usuarios.toArray()));

@@ -68,8 +68,8 @@
 </head>
 <body>
 	<div id="main">
-		<div id="head">
-			<img src="images/banner.jpg" width="800px" height="100px" />
+		<div id="cabecalho">
+			<img src="images/banner.jpg" height="100px" width="800px" />
 		</div>
 		<div id="corpo">
 			<div>
@@ -105,14 +105,18 @@
 						</c:when>
 						<c:when test="${not empty listaUsuarios}">
 							<c:forEach var="usuario" items="${listaUsuarios}">
-								<form method="post" action="UsuarioServlet">
-									<tr align="center">
-										<td>${usuario.nome}</td>
-										<td>${usuario.cpf}</td>
-										<td><input type="submit" value="Alterar" /></td>
-										<td><input type="submit" value="Excluir" /></td>
-									</tr>
-								</form>
+								<tr align="center">
+									<td>${usuario.nome}</td>
+									<td>${usuario.cpf}</td>
+									<td><input type="submit" value="Alterar" /></td>
+									<td>
+										<form name="Insert" action="UsuarioServlet">
+											<input type="hidden" name="operacao" value="delete" />
+											<input type="hidden" name="cpf" value="${usuario.cpf}" />
+											<input type="submit" value="Excluir" />
+										</form>
+									</td>
+								</tr>
 							</c:forEach>
 						</c:when>
 					</c:choose>

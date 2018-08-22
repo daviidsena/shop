@@ -37,6 +37,26 @@ public class UsuarioDaoImpl implements UsuarioDao {
 	}
 
 	@Override
+	public Usuario delete(Usuario usuario) throws DaoException {
+		Connection conexaoBD = DBConnect.getConnection();
+		String comandoSql = "delete from usuario where cpf = ?";
+		try {
+			PreparedStatement comandoJdbc = conexaoBD.prepareStatement(comandoSql);
+			comandoJdbc.setString(1, usuario.getCpf());
+			comandoJdbc.executeUpdate();
+		} catch (SQLException e) {
+			throw new DaoException("Exclusão do Usuário falhou.", e); 
+		} finally {
+			try {
+				conexaoBD.close();
+			} catch (SQLException e) {
+				throw new DaoException("Close da conexão com o banco de dados falhou.", e); 
+			}
+		}
+		return usuario;
+	}
+
+	@Override
 	public List<Usuario> findByAll() throws DaoException {
 		Connection conexaoBD = DBConnect.getConnection();
 		String comandoSql = "select nome, cpf from usuario";
