@@ -1,6 +1,9 @@
 package org.itstep.javaee.controller;
 
 import java.io.IOException;
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -47,8 +50,11 @@ public class UsuarioServlet extends HttpServlet {
 				if (operacao.equals("insert")) {
 					String nome = (String) request.getParameter("nome");
 					String cpf = (String) request.getParameter("cpf");
+					SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+					Date validade = new Date(sdf.parse(request.getParameter("validade")).getTime());
 					usuario.setNome(nome);
 					usuario.setCpf(cpf);
+					usuario.setValidade(validade);
 					usuarioDao.create(usuario);
 				} else if (operacao.equals("delete")) {
 					String cpf = (String) request.getParameter("cpf");
@@ -59,6 +65,9 @@ public class UsuarioServlet extends HttpServlet {
 			usuarios = usuarioDao.findByAll();
 			System.out.println(Arrays.toString(usuarios.toArray()));
 		} catch (DaoException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

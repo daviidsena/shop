@@ -79,11 +79,19 @@
 						<tr align="center">
 							<th>Nome</th>
 							<th>CPF</th>
-							<th>Inclusão</th>
 						</tr>
 						<tr align="center">
 							<td><input type="text" name="nome" /></td>
 							<td><input type="text" name="cpf" /></td>
+						</tr>
+					</table>
+					<table style="width: 100%">
+						<tr align="center">
+							<th>Validade</th>
+							<th>Inclusão</th>
+						</tr>
+						<tr align="center">
+							<td><input type="datetime-local" name="validade" /></td>
 							<td><input type="submit" value="Incluir" /></td>
 						</tr>
 					</table>
@@ -94,6 +102,7 @@
 					<tr align="center">
 						<th>Nome</th>
 						<th>CPF</th>
+						<th>Validade</th>
 						<th>Atualizar</th>
 						<th>Excluir</th>
 					</tr>
@@ -108,6 +117,7 @@
 								<tr align="center">
 									<td>${usuario.nome}</td>
 									<td>${usuario.cpf}</td>
+									<td>${usuario.validade}</td>
 									<td><input type="submit" value="Alterar" /></td>
 									<td>
 										<form name="Insert" action="UsuarioServlet">

@@ -18,11 +18,12 @@ public class UsuarioDaoImpl implements UsuarioDao {
 	@Override
 	public Usuario create(Usuario usuario) throws DaoException {
 		Connection conexaoBD = DBConnect.getConnection();
-		String comandoSql = "insert into usuario (nome, cpf) values (?, ?)";
+		String comandoSql = "insert into usuario (nome, cpf, validade) values (?, ?, ?)";
 		try {
 			PreparedStatement comandoJdbc = conexaoBD.prepareStatement(comandoSql);
 			comandoJdbc.setString(1, usuario.getNome());
 			comandoJdbc.setString(2, usuario.getCpf());
+			comandoJdbc.setDate(3, usuario.getValidade());
 			comandoJdbc.executeUpdate();
 		} catch (SQLException e) {
 			throw new DaoException("Inclusão do Usuário falhou.", e); 
@@ -59,13 +60,13 @@ public class UsuarioDaoImpl implements UsuarioDao {
 	@Override
 	public List<Usuario> findByAll() throws DaoException {
 		Connection conexaoBD = DBConnect.getConnection();
-		String comandoSql = "select nome, cpf from usuario";
+		String comandoSql = "select nome, cpf, validade from usuario";
 		List<Usuario> usuarios = new ArrayList<Usuario>();
 		try {
 			Statement comandoJdbc = conexaoBD.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
 			ResultSet rs = comandoJdbc.executeQuery(comandoSql);
 			while (rs.next()) {
-				usuarios.add(new Usuario(rs.getString(1), rs.getString(2)));
+				usuarios.add(new Usuario(rs.getString(1), rs.getString(2), rs.getDate(3)));
 			}
 		} catch (SQLException e) {
 			throw new DaoException("Leitura do usuários falhou.", e); 
